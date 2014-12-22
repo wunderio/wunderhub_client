@@ -1,18 +1,13 @@
 <div class='team' data-ng-controller="WHTeamController">
   <div>
-    <div ng-repeat="person in Team">
-      <div ng-bind-html="person.picture">
-      </div>
+    <div data-ng-repeat="person in Team">
+      <div data-ng-bind-html="person.picture"></div>
       <div>
-        {{person.firstName}} {{person.lastName}}
+        <span data-ng-bind="person.firstName"></span>
+        <span data-ng-bind="person.lastName"></span>
       </div>
-      <div>
-        {{person.jobTitle}}
-      </div>
-      <div>
-        {{person.office}}
-      </div>
+      <div data-ng-bind="person.jobTitle"></div>
+      <div data-ng-bind="person.office"></div>
     </div>
   </div>
-
 </div>
