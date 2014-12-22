@@ -1,0 +1,4 @@
+name = Wunderhub client
+description = "Client for accessing the wunderhub content repository"
+version = 7.x-1.0
+core = 7.x
