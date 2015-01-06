@@ -18,6 +18,14 @@ function wunderhub_client_menu() {
     'type' => MENU_CALLBACK,
   );
 
+  $items['team/%'] = array(
+    'title' => 'Team member',
+    'access callback' => TRUE,
+    'page callback' => 'wunderhub_client_team_member',
+    'page arguments' => array(1),
+    'type' => MENU_CALLBACK,
+  );
+
   $items['admin/config/search/wunderhub'] = array(
     'title' => 'Wunderhub settings',
     'page callback' => 'drupal_get_form',
@@ -30,7 +38,7 @@ function wunderhub_client_menu() {
 }
 
 /**
- * Returns
+ * Returns a list of team members.
  */
 function wunderhub_client_team() {
   $output = array();
@@ -58,6 +66,40 @@ function wunderhub_client_team() {
 }
 
 /**
+ * Returns a specific team member.
+ */
+function wunderhub_client_team_member($uid) {
+  if (!is_numeric($uid)) {
+    drupal_access_denied();
+    drupal_exit();
+  }
+
+  $output = array();
+
+  $output['team_member'] = array(
+    '#theme' => 'wunderhub_client_team_member',
+    '#title' => t('Team member'),
+    // @TODO Evaluate adding angular as a library or using angularjs module
+    // instead.
+    '#attached' => array(
+      'js' => array(
+        'https://ajax.googleapis.com/ajax/libs/angularjs/1.3.5/angular.min.js',
+        drupal_get_path('module', 'wunderhub_client') . '/js/wunderhub_client_team.js',
+        array(
+          'data' => array(
+            'wunderhub_client_team_member_url' => variable_get('wunderhub_client_team_member_url', ''),
+            'wunder_uid' => $uid,
+          ),
+          'type' => 'setting',
+        ),
+      ),
+    ),
+  );
+
+  return $output;
+}
+
+/**
  * Implements hook_theme().
  */
 function wunderhub_client_theme() {
@@ -68,16 +110,23 @@ function wunderhub_client_theme() {
       ),
       'template' => 'wunderhub_client_team',
       'path' => drupal_get_path('module', 'wunderhub_client') . '/templates'
-    )
+    ),
+    'wunderhub_client_team_member' => array(
+      'variables' => array(
+        'message' => '',
+      ),
+      'template' => 'wunderhub_client_team_member',
+      'path' => drupal_get_path('module', 'wunderhub_client') . '/templates'
+    ),
   );
+
 }
 
 /**
  * Implements hook_preprocess_html().
  */
 function wunderhub_client_preprocess_html(&$vars) {
-  $path = current_path();
-  if ($path == 'team') {
+  if (strpos(current_path(), 'team') === 0) {
     $vars['attributes_array']['ng-app'] = 'wunderhub_client';
   }
 }
