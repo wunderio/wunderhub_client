@@ -20,9 +20,9 @@ function wunderhub_client_menu() {
 
   $items['team/%'] = array(
     'title' => 'Team member',
-    'access callback' => TRUE,
     'page callback' => 'wunderhub_client_team_member',
     'page arguments' => array(1),
+    'access callback' => TRUE,
     'type' => MENU_CALLBACK,
   );
 
