@@ -27,7 +27,7 @@ function wunderhub_client_settings($form, &$form_state) {
   $form['endpoints']['team_member_url'] = array(
     '#type' => 'textfield',
     '#title' => t('Single team member URL'),
-    '#description' => t('Enter URL to single team member endpoint. Note that <code>/[uid]</code> is added automatically.'),
+    '#description' => t('Enter URL to single team member endpoint. Note that <code>/[id]</code> is appended automatically.'),
     '#default_value' => isset($settings['team_member_url']) ? $settings['team_member_url'] : '',
   );
 

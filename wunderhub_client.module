@@ -118,10 +118,10 @@ function wunderhub_client_team() {
 /**
  * Returns a specific team member.
  */
-function wunderhub_client_team_member($uid) {
+function wunderhub_client_team_member($id) {
   $settings = variable_get('wunderhub_client', array());
 
-  if (!is_numeric($uid) || empty($settings['team_member_url'])) {
+  if (!is_numeric($id) || empty($settings['team_member_url'])) {
     drupal_access_denied();
     drupal_exit();
   }
@@ -141,7 +141,7 @@ function wunderhub_client_team_member($uid) {
           'data' => array(
             'wunderhubClient' => array(
               'url' => $settings['team_member_url'],
-              'uid' => $uid,
+              'id' => $id,
             ),
           ),
           'type' => 'setting',
