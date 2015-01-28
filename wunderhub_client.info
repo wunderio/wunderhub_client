@@ -1,4 +1,4 @@
-name = Wunderhub client
-description = "Client for accessing the wunderhub content repository"
-version = 7.x-1.0
+name = WunderHub Client
+description = Client for accessing the WunderHub.
 core = 7.x
+configure = admin/config/services/wunderhub

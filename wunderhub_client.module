@@ -2,7 +2,7 @@
 
 /**
  *  @file
- *  Module file for accessing Wunderhub content.
+ *  Main file of WunderHub Client module.
  */
 
 /**
@@ -26,69 +26,85 @@ function wunderhub_client_menu() {
     'type' => MENU_CALLBACK,
   );
 
-  $items['admin/config/search/wunderhub'] = array(
-    'title' => 'Wunderhub settings',
+  $items['admin/config/services/wunderhub'] = array(
+    'title' => 'WunderHub Client',
+    'description' => 'Configure URLs to WunderHub endpoints.',
     'page callback' => 'drupal_get_form',
-    'page arguments' => array('wunderub_client_settings'),
+    'page arguments' => array('wunderhub_client_settings'),
     'access arguments' => array('administer site configuration'),
-    'file' => 'wunderub_client.admin.inc',
+    'file' => 'wunderhub_client.admin.inc',
   );
 
   return $items;
 }
 
 /**
- * Returns a list of team members.
+ * Implements hook_library().
  */
-function wunderhub_client_team() {
-  $output = array();
+function wunderhub_client_library() {
+  $libraries = array();
 
-  $output['team'] = array(
-    '#theme' => 'wunderhub_client_team',
-    '#title' => t('Team'),
-     // @TODO Evaluate adding angular as a library or using angularjs module
-     // instead.
-    '#attached' => array(
-      'js' => array(
-        'https://ajax.googleapis.com/ajax/libs/angularjs/1.3.5/angular.min.js',
-        drupal_get_path('module', 'wunderhub_client') . '/js/wunderhub_client_team.js',
-        array(
-          'data' => array(
-            'wunderhub_client_team_url' => variable_get('wunderhub_client_team_url', ''),
-          ),
-            'type' => 'setting',
-          ),
+  $libraries['angularjs'] = array(
+    'title' => 'AngularJS',
+    'website' => 'https://angularjs.org',
+    'version' => '1.3.4',
+    'js' => array(
+      '//ajax.googleapis.com/ajax/libs/angularjs/1.3.5/angular.min.js' => array(
+        'external' => TRUE,
       ),
     ),
   );
 
-  return $output;
+  return $libraries;
 }
 
 /**
- * Returns a specific team member.
+ * Implements hook_theme().
  */
-function wunderhub_client_team_member($uid) {
-  if (!is_numeric($uid)) {
+function wunderhub_client_theme() {
+  $module = drupal_get_path('module', 'wunderhub_client');
+
+  return array(
+    'wunderhub_client_team' => array(
+      'render element' => 'element',
+      'template' => 'wunderhub_client_team',
+      'path' => $module . '/templates',
+    ),
+    'wunderhub_client_team_member' => array(
+      'render element' => 'element',
+      'template' => 'wunderhub_client_team_member',
+      'path' => $module . '/templates',
+    ),
+  );
+}
+
+/**
+ * Returns a list of team members.
+ */
+function wunderhub_client_team() {
+  $settings = variable_get('wunderhub_client', array());
+
+  if (empty($settings['team_url'])) {
     drupal_access_denied();
     drupal_exit();
   }
 
   $output = array();
 
-  $output['team_member'] = array(
-    '#theme' => 'wunderhub_client_team_member',
-    '#title' => t('Team member'),
-    // @TODO Evaluate adding angular as a library or using angularjs module
-    // instead.
+  $output['team'] = array(
+    '#theme' => 'wunderhub_client_team',
+    '#title' => t('Team'),
     '#attached' => array(
+      'library' => array(
+        array('wunderhub_client', 'angularjs'),
+      ),
       'js' => array(
-        'https://ajax.googleapis.com/ajax/libs/angularjs/1.3.5/angular.min.js',
-        drupal_get_path('module', 'wunderhub_client') . '/js/wunderhub_client_team.js',
+        drupal_get_path('module', 'wunderhub_client') . '/js/wunderhub-client-team.js',
         array(
           'data' => array(
-            'wunderhub_client_team_member_url' => variable_get('wunderhub_client_team_member_url', ''),
-            'wunder_uid' => $uid,
+            'wunderhubClient' => array(
+              'url' => $settings['team_url'],
+            ),
           ),
           'type' => 'setting',
         ),
@@ -100,33 +116,48 @@ function wunderhub_client_team_member($uid) {
 }
 
 /**
- * Implements hook_theme().
+ * Returns a specific team member.
  */
-function wunderhub_client_theme() {
-  return array(
-    'wunderhub_client_team' => array(
-      'variables' => array(
-        'message' => '',
+function wunderhub_client_team_member($uid) {
+  $settings = variable_get('wunderhub_client', array());
+
+  if (!is_numeric($uid) || empty($settings['team_member_url'])) {
+    drupal_access_denied();
+    drupal_exit();
+  }
+
+  $output = array();
+
+  $output['team_member'] = array(
+    '#theme' => 'wunderhub_client_team_member',
+    '#title' => t('Team member'),
+    '#attached' => array(
+      'library' => array(
+        array('wunderhub_client', 'angularjs'),
       ),
-      'template' => 'wunderhub_client_team',
-      'path' => drupal_get_path('module', 'wunderhub_client') . '/templates'
-    ),
-    'wunderhub_client_team_member' => array(
-      'variables' => array(
-        'message' => '',
+      'js' => array(
+        drupal_get_path('module', 'wunderhub_client') . '/js/wunderhub-client-team.js',
+        array(
+          'data' => array(
+            'wunderhubClient' => array(
+              'url' => $settings['team_member_url'],
+              'uid' => $uid,
+            ),
+          ),
+          'type' => 'setting',
+        ),
       ),
-      'template' => 'wunderhub_client_team_member',
-      'path' => drupal_get_path('module', 'wunderhub_client') . '/templates'
     ),
   );
 
+  return $output;
 }
 
 /**
  * Implements hook_preprocess_html().
  */
 function wunderhub_client_preprocess_html(&$vars) {
-  if (strpos(current_path(), 'team') === 0) {
-    $vars['attributes_array']['ng-app'] = 'wunderhub_client';
+  if (arg(0) == 'team') {
+    $vars['attributes_array']['ng-app'] = 'wunderhub-client';
   }
 }

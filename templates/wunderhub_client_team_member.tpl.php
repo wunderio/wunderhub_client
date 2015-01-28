@@ -1,6 +1,6 @@
-<div class='team-member' data-ng-controller="WHTeamMemberController">
+<div class="team-member" data-ng-controller="WHTeamMemberController">
   <div>
-    <div data-ng-bind-html="TeamMember.picture"></div>
+    <img ng-src="{{ TeamMember.picture }}">
     <div>
       <span data-ng-bind="TeamMember.firstName"></span>
       <span data-ng-bind="TeamMember.lastName"></span>
