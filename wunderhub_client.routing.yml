@@ -1,0 +1,23 @@
+wunderhub_client.admin:
+  path: '/admin/config/services/wunderhub-client'
+  defaults:
+    _form: '\Drupal\wunderhub_client\Form\WunderHubConfigForm'
+    _title: 'WunderHub Client'
+  requirements:
+    _permission: 'administer site configuration'
+
+wunderhub_client.team:
+  path: '/team'
+  defaults:
+    _controller: '\Drupal\wunderhub_client\Controller\TeamController::renderTeam'
+    _title: 'Team'
+  requirements:
+    _permission: 'access content'
+
+wunderhub_client.team_member:
+  path: '/team/{id}'
+  defaults:
+    _controller: '\Drupal\wunderhub_client\Controller\TeamController::renderTeamMember'
+    _title: 'Team member'
+  requirements:
+    _permission: 'access content'
