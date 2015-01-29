@@ -2,7 +2,7 @@
 
   "use strict";
 
-  var app = angular.module('wunderhub-client', []);
+  var app = angular.module('wunderhub-client', ['angular.filter']);
 
   // We need that to use Angular inside Twig templates.
   app.config(function($interpolateProvider) {
