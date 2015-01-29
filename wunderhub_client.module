@@ -18,9 +18,5 @@ function wunderhub_client_theme() {
  * Implements hook_preprocess_html().
  */
 function wunderhub_client_preprocess_html(&$variables) {
-  $path_args = explode('/', \Drupal::request()->attributes->get('_system_path'));
-
-  if ($path_args[0] == 'team') {
-    $variables['html_attributes']['ng-app'] = 'wunderhub-client';
-  }
+  $variables['html_attributes']['ng-app'] = 'wunderhub-client';
 }
