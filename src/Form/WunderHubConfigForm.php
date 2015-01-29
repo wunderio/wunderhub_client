@@ -27,7 +27,7 @@ class WunderHubConfigForm extends FormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
-    $config = \Drupal::config('wunderhub_client.settings');
+    $config = \Drupal::configFactory()->getEditable('wunderhub_client.settings');
 
     $form['endpoints'] = [
       '#type' => 'fieldset',
@@ -60,7 +60,7 @@ class WunderHubConfigForm extends FormBase {
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
-    $config = \Drupal::config('wunderhub_client.settings');
+    $config = \Drupal::configFactory()->getEditable('wunderhub_client.settings');
 
     foreach (Element::children($form['endpoints']) as $key) {
       $config->set($key, $form_state->getValue($key));
