@@ -12,6 +12,7 @@
 
   app.controller('WHTeamController', function($scope, $http, $log) {
     $scope.Team = [];
+
     var url = drupalSettings.wunderhubClient.url,
         req = {
           method: 'GET',
