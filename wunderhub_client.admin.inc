@@ -44,7 +44,11 @@ function wunderhub_client_settings($form, &$form_state) {
  */
 function wunderhub_client_settings_submit($form, &$form_state) {
   $settings = variable_get('wunderhub_client', array());
-  $settings += $form_state['values']['endpoints'];
+  $endpoints = $form_state['values']['endpoints'];
+
+  foreach ($endpoints as $name => $url) {
+    $settings[$name] = $url;
+  }
 
   variable_set('wunderhub_client', $settings);
 
