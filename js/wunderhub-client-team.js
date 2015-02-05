@@ -1,5 +1,5 @@
 (function() {
-  var app = angular.module('wunderhub-client', []);
+  var app = angular.module('wunderhub-client', ['angular.filter']);
 
   app.controller('WHTeamController', function ($scope, $http, $log) {
     $scope.Team = [];
