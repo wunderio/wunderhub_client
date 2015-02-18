@@ -27,7 +27,7 @@ class WunderHubConfigForm extends FormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
-    $config = \Drupal::configFactory()->getEditable('wunderhub_client.settings');
+    $config = \Drupal::configFactory()->get('wunderhub_client.settings');
 
     $form['endpoints'] = [
       '#type' => 'fieldset',
