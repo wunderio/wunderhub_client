@@ -1,0 +1,6 @@
+name: WunderHub Client
+type: module
+description: 'Client for accessing the WunderHub.'
+package: Web services
+configure: wunderhub_client.admin
+core: 8.x

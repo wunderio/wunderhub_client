@@ -1,0 +1,5 @@
+wunderhub_client.admin:
+  title: WunderHub Client
+  description: 'Client for accessing the WunderHub.'
+  parent: system.admin_config_services
+  route_name: wunderhub_client.admin
