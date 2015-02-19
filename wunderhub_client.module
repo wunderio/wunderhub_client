@@ -47,7 +47,7 @@ function wunderhub_client_library() {
   $libraries['angularjs'] = array(
     'title' => 'AngularJS',
     'website' => 'https://angularjs.org',
-    'version' => '1.3.4',
+    'version' => '1.3.5',
     'js' => array(
       '//ajax.googleapis.com/ajax/libs/angularjs/1.3.5/angular.min.js' => array(
         'external' => TRUE,
@@ -105,9 +105,7 @@ function wunderhub_client_team() {
         drupal_get_path('module', 'wunderhub_client') . '/js/wunderhub-client-team.js',
         array(
           'data' => array(
-            'wunderhubClient' => array(
-              'url' => $settings['team_url'],
-            ),
+            'wunderhubClient' => $settings,
           ),
           'type' => 'setting',
         ),
@@ -123,6 +121,7 @@ function wunderhub_client_team() {
  */
 function wunderhub_client_team_member($id) {
   $settings = variable_get('wunderhub_client', array());
+  $settings['id'] = $id;
 
   if (!is_numeric($id) || empty($settings['team_member_url'])) {
     drupal_access_denied();
@@ -142,10 +141,7 @@ function wunderhub_client_team_member($id) {
         drupal_get_path('module', 'wunderhub_client') . '/js/wunderhub-client-team.js',
         array(
           'data' => array(
-            'wunderhubClient' => array(
-              'url' => $settings['team_member_url'],
-              'id' => $id,
-            ),
+            'wunderhubClient' => $settings,
           ),
           'type' => 'setting',
         ),

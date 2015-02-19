@@ -31,6 +31,34 @@ function wunderhub_client_settings($form, &$form_state) {
     '#default_value' => isset($settings['team_member_url']) ? $settings['team_member_url'] : '',
   );
 
+  $form['display_options'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Data display options'),
+  );
+
+  $form['display_options']['group'] = array(
+    '#type' => 'select',
+    '#options' => array('country' => t('Country'), 'office' => t('Office'), 'jobTitle' => t('Job title')),
+    '#title' => t('Group field'),
+    '#description' => t('Select the field for grouping the data.'),
+    '#default_value' => isset($settings['group']) ? $settings['group'] : 'country',
+  );
+
+  $form['display_options']['sort'] = array(
+    '#type' => 'select',
+    '#options' => array('firstName' => t('First name'), 'lastName' => t('Last name'), 'jobTitle' => t('By job title'), 'randomSort' => t('Randomly')),
+    '#title' => t('Sort field'),
+    '#description' => t('Select the field for sorting the data.'),
+    '#default_value' => isset($settings['sort']) ? $settings['sort'] : 'alphabetically',
+  );
+
+  $form['display_options']['promoted_group'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Promoted group'),
+    '#description' => t('The group (office, country, job title) promoted by this option will be displayed the first in the list. Leave empty for no action.'),
+    '#default_value' => isset($settings['promoted_group']) ? $settings['promoted_group'] : '',
+  );
+
   $form['submit'] = array(
     '#type' => 'submit',
     '#value' => t('Submit'),
@@ -40,14 +68,15 @@ function wunderhub_client_settings($form, &$form_state) {
 }
 
 /**
- * Submit callback for configuration form.
+ * Submit callback for the configuration form.
  */
 function wunderhub_client_settings_submit($form, &$form_state) {
   $settings = variable_get('wunderhub_client', array());
-  $endpoints = $form_state['values']['endpoints'];
-
-  foreach ($endpoints as $name => $url) {
-    $settings[$name] = $url;
+  foreach (array('endpoints', 'display_options') as $option) {
+    $elements = $form_state['values'][$option];
+    foreach ($elements as $name => $value) {
+      $settings[$name] = $value;
+    }
   }
 
   variable_set('wunderhub_client', $settings);

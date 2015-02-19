@@ -3,7 +3,7 @@
 
   app.controller('WHTeamController', function ($scope, $http, $log) {
     $scope.Team = [];
-    var url = Drupal.settings.wunderhubClient.url,
+    var url = Drupal.settings.wunderhubClient.team_url,
         req = {
           method: 'GET',
           url: url,
@@ -16,9 +16,13 @@
       .success(function (data, status, headers, config) {
         data.forEach(function (item) {
           item.path = Drupal.settings.basePath + 'team/' + item.uid;
+          item.randomSort = 0.5 - Math.random();
         });
 
         $scope.Team = data;
+
+        $scope.Group = Drupal.settings.wunderhubClient.group;
+        $scope.Sort = Drupal.settings.wunderhubClient.sort;
       })
       .error(function (data, status, headers, config) {
         $log.error('Could not retrieve data from ' + url);
@@ -29,7 +33,7 @@
     $scope.TeamMember = [];
 
     var id = Drupal.settings.wunderhubClient.id,
-        url = Drupal.settings.wunderhubClient.url + '/' + id,
+        url = Drupal.settings.wunderhubClient.team_url + '/' + id,
         req = {
           method: 'GET',
           url: url,
