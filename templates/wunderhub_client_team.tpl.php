@@ -13,17 +13,23 @@
       <option value="">-- Select a job title --</option>
     </select>
 
-    <ul data-ng-repeat="group in Team | orderBy: 'office' | filterBy: ['country']: countryItems.country | filterBy: ['office']: officeItems.office | filterBy: ['jobTitle']: jobItems.jobTitle | groupBy: Group | toArray:true">
+    <ul class="team" data-ng-repeat="group in Team | orderBy: 'office' | filterBy: ['country']: countryItems.country | filterBy: ['office']: officeItems.office | filterBy: ['jobTitle']: jobItems.jobTitle | groupBy: Group | toArray:true">
       <h2 data-ng-bind="group.$key"></h2>
-      <li data-ng-repeat="person in group | orderBy: Sort">
-        <a ng-href="{{ person.path }}"><img ng-src="{{ person.picture_thumb }}"></a>
+      <li class="team__member person" data-ng-repeat="person in group | orderBy: Sort">
+        <a ng-href="{{ person.path }}">
+          <div class="person__picture">
+            <img ng-src="{{ person.picture_thumb }}">
+          </div>
+        </a>
         <div>
-          <a ng-href="{{ person.path }}">
-            <span data-ng-bind="person.firstName"></span>
-            <span data-ng-bind="person.lastName"></span>
-          </a>
+          <h3 class="person__name">
+            <a ng-href="{{ person.path }}">
+              <span data-ng-bind="person.firstName"></span>
+              <span data-ng-bind="person.lastName"></span>
+            </a>
+          </div>
         </div>
-        <div data-ng-bind="person.jobTitle"></div>
+        <div class="person__job-title" data-ng-bind="person.jobTitle"></div>
       </li>
     </ul>
   </div>
