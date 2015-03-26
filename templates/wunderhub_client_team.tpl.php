@@ -21,14 +21,12 @@
             <img ng-src="{{ person.picture_thumb }}">
           </div>
         </a>
-        <div>
-          <h3 class="person__name">
-            <a ng-href="{{ person.path }}">
-              <span data-ng-bind="person.firstName"></span>
-              <span data-ng-bind="person.lastName"></span>
-            </a>
-          </div>
-        </div>
+        <h3 class="person__name">
+          <a ng-href="{{ person.path }}">
+            <span data-ng-bind="person.firstName"></span>
+            <span data-ng-bind="person.lastName"></span>
+          </a>
+        </h3>
         <div class="person__job-title" data-ng-bind="person.jobTitle"></div>
       </li>
     </ul>
