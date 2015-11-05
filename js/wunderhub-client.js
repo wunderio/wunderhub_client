@@ -35,7 +35,7 @@
       });
   });
 
-  app.controller('WHTeamMemberController', function($scope, $http, $log) {
+  app.controller('WHTeamMemberController', function($scope, $http, $sce, $window, $log) {
     $scope.TeamMember = [];
 
     var id = drupalSettings.wunderhubClient.id,
@@ -51,10 +51,18 @@
     $http(req)
       .success(function(data, status, headers, config) {
         $scope.TeamMember = data.pop();
+        if (typeof $scope.TeamMember === 'undefined') {
+          $window.location.href = '/system/404';
+        }
       })
       .error(function(data, status, headers, config) {
         $log.error('Could not retrieve data from ' + url);
+        $window.location.href = '/system/404';
       });
+
+    $scope.toTrustedHTML = function( html ) {
+      return $sce.trustAsHtml( html );
+    };
   });
 
 })(jQuery, Drupal, drupalSettings);

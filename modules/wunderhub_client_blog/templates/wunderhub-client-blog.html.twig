@@ -1,0 +1,10 @@
+<div class="blog" data-ng-controller="WHBlogController">
+    <h1>Blog</h1>
+    <div>
+        <div data-ng-repeat="blog in Blog">
+            <a ng-href="[[ blog.path ]]"><h2>[[ blog.title ]]</h2></a>
+            <div class="created" data-ng-nonbindable>[[ blog.created | date:'fullDate' ]]</div>
+            <div class="intro" data-ng-bind-html="toTrustedHTML( blog.intro )"></div>
+        </div>
+    </div>
+</div>

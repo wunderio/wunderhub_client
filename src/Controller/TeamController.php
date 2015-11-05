@@ -22,10 +22,11 @@ class TeamController extends ControllerBase {
    *   Array of page elements to render.
    */
   public function renderTeam() {
-    $team_endpoint = \Drupal::configFactory()->getEditable('wunderhub_client.settings')->get('team_url');
+    $wunderhub_api_endpoint = \Drupal::configFactory()->getEditable('wunderhub_client.settings')->get('wunderhub_api_url');
+    $team_endpoint = $wunderhub_api_endpoint . \Drupal::configFactory()->getEditable('wunderhub_client.settings')->get('team_api_endpoint');
 
     if (!$team_endpoint) {
-      return new RedirectResponse('system/404');
+      return new RedirectResponse('/system/404');
     }
 
     $output = [
@@ -55,10 +56,11 @@ class TeamController extends ControllerBase {
    *   Array of page elements to render.
    */
   public function renderTeamMember($id) {
-    $team_member_endpoint = \Drupal::configFactory()->getEditable('wunderhub_client.settings')->get('team_member_url');
+    $wunderhub_api_endpoint = \Drupal::configFactory()->getEditable('wunderhub_client.settings')->get('wunderhub_api_url');
+    $team_member_endpoint = $wunderhub_api_endpoint . \Drupal::configFactory()->getEditable('wunderhub_client.settings')->get('team_member_api_endpoint');
 
     if (!$team_member_endpoint || !is_numeric($id)) {
-      return new RedirectResponse('system/404');
+      return new RedirectResponse('/system/404');
     }
 
     $output = [

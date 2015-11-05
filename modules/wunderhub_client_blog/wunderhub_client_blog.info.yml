@@ -1,0 +1,8 @@
+name: WunderHub Client: Blog
+type: module
+description: 'Client for accessing the WunderHub Blog pages.'
+package: Web services
+configure: wunderhub_client.admin
+core: 8.x
+dependencies:
+  - wunderhub_client

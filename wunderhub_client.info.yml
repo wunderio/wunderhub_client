@@ -1,6 +1,6 @@
-name: WunderHub Client
+name: WunderHub Client: team
 type: module
-description: 'Client for accessing the WunderHub.'
+description: 'Client for accessing the WunderHub team pages.'
 package: Web services
 configure: wunderhub_client.admin
 core: 8.x
