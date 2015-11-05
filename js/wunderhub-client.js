@@ -35,7 +35,7 @@
       });
   });
 
-  app.controller('WHTeamMemberController', function($scope, $http, $log) {
+  app.controller('WHTeamMemberController', function($scope, $http, $sce, $log) {
     $scope.TeamMember = [];
 
     var id = drupalSettings.wunderhubClient.id,
@@ -55,6 +55,10 @@
       .error(function(data, status, headers, config) {
         $log.error('Could not retrieve data from ' + url);
       });
+
+    $scope.toTrustedHTML = function( html ) {
+      return $sce.trustAsHtml( html );
+    };
   });
 
 })(jQuery, Drupal, drupalSettings);
