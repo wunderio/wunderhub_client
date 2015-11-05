@@ -24,7 +24,7 @@ class BlogController extends ControllerBase {
     $blog_endpoint = $wunderhub_api_endpoint . \Drupal::configFactory()->getEditable('wunderhub_client.settings')->get('blog_api_endpoint');
 
     if (!$blog_endpoint) {
-      return new RedirectResponse('system/404');
+      return new RedirectResponse('/system/404');
     }
 
     $output = [
@@ -60,7 +60,7 @@ class BlogController extends ControllerBase {
     preg_match('/\w{8}-\w{4}-\w{4}-\w{4}-\w{12}/', $id, $matches);
 
     if (!$blog_entry_endpoint|| empty($matches)) {
-      return new RedirectResponse('system/404');
+      return new RedirectResponse('/system/404');
     }
 
     $output = [
