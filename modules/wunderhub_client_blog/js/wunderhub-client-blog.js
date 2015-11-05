@@ -47,7 +47,7 @@
         };
     });
 
-    app.controller('WHBlogEntryController', function($scope, $http, $sce, $log) {
+    app.controller('WHBlogEntryController', function($scope, $http, $sce, $window, $log) {
         $scope.BlogEntry = [];
 
         var id = drupalSettings.wunderhubClientBlogEntry.uuid,
@@ -63,9 +63,13 @@
         $http(req)
             .success(function(data, status, headers, config) {
                 $scope.BlogEntry = data.pop();
+                if (typeof $scope.BlogEntry === 'undefined') {
+                    $window.location.href = '/system/404';
+                }
             })
             .error(function(data, status, headers, config) {
                 $log.error('Could not retrieve data from ' + url);
+                $window.location.href = '/system/404';
             });
 
         $scope.toTrustedHTML = function( html ) {
