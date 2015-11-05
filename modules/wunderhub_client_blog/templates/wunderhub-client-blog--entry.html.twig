@@ -1,0 +1,8 @@
+<div class="blog--entry" data-ng-controller="WHBlogEntryController">
+    <img data-ng-src="[[ BlogEntry.image_large ]]">
+    <h1 data-ng-bind="BlogEntry.title"></h1>
+    <div class="created" data-ng-nonbindable>[[ BlogEntry.created | date:'fullDate' ]]</div>
+    <div class="intro"  data-ng-bind-html="toTrustedHTML( BlogEntry.intro )"></div>
+    <div class="body"  data-ng-bind-html="toTrustedHTML( BlogEntry.body )"></div>
+    <div class="kicker"  data-ng-bind-html="toTrustedHTML( BlogEntry.kicker )"></div>
+</div>

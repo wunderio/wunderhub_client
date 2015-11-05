@@ -1,0 +1,7 @@
+wunderhub_client_blog.blog:
+  js:
+    js/wunderhub-client-blog.js: {}
+  dependencies:
+    - core/drupalSettings
+    - wunderhub_client/wunderhub_client.angularjs
+    - wunderhub_client/wunderhub_client.angular-filter

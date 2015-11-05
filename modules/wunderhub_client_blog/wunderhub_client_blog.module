@@ -1,0 +1,33 @@
+<?php
+/**
+ * @file wunderhub_client_blog.module
+ */
+
+/**
+ * Implements hook_theme().
+ */
+function wunderhub_client_blog_theme() {
+  return [
+    'wunderhub_client_blog' => [
+      'render element' => 'element',
+    ],
+    'wunderhub_client_blog__entry' => [
+      'render element' => 'elements',
+    ],
+  ];
+}
+
+/**
+ * Implements hook_preprocess_html().
+ */
+function wunderhub_client_blog_preprocess_html(&$variables) {
+  $variables['html_attributes']['ng-app'] = 'wunderhub-client-blog';
+}
+
+/**
+ * Implements hook_preprocess_wunderhub_client_blog().
+ */
+function wunderhub_client_blog_preprocess_wunderhub_client_blog(&$variables) {
+  $variables['title'] = t('Blog');
+  $variables['intro'] = t('Our team in a variety of countries share ideas, experiences, advice, news and more in their blogs …');
+}

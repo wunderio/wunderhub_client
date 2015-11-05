@@ -1,0 +1,15 @@
+wunderhub_client_blog.blog:
+  path: '/blog'
+  defaults:
+    _controller: '\Drupal\wunderhub_client_blog\Controller\BlogController::renderBlog'
+    _title: 'Blog'
+  requirements:
+    _permission: 'access content'
+
+wunderhub_client.blog_entry:
+  path: '/blog/{id}'
+  defaults:
+    _controller: '\Drupal\wunderhub_client_blog\Controller\BlogController::renderBlogEntry'
+    _title: 'Blog entry'
+  requirements:
+    _permission: 'access content'
